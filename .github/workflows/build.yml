@@ -17,9 +17,18 @@ jobs:
     - run: flutter doctor
     - run: flutter pub get
     - run: flutter test
+    
+    - run: flutter build web
+    # Push web app to github-pages
+    - name: GitHub Pages action
+      uses: peaceiris/actions-gh-pages@v3.7.3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./build/web
+    
     - run: flutter build apk --split-per-abi
     - run: flutter build appbundle
-    # Push the builds to workflow page
+    # Push the android builds to workflow page
     - name: Upload artifacts
       uses: actions/upload-artifact@v3
       with:
